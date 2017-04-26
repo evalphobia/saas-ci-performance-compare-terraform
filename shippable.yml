@@ -1,0 +1,21 @@
+language: go
+  - 1.7.5
+
+env:
+  GODIST: "go1.8.1.linux-amd64.tar.gz"
+
+build:
+  cache_dir_list:
+    - "${HOME}/cache"
+  pre_ci:
+    - mkdir -p downloads
+    - test -e downloads/$GODIST || curl -o downloads/$GODIST https://storage.googleapis.com/golang/$GODIST
+    - sudo rm -rf /usr/local/go
+    - sudo tar -C /usr/local -xzf downloads/$GODIST
+    - make change-import-path
+    - bash scripts/gogetcookie.sh
+    - go get github.com/kardianos/govendor
+    - go get -v -d -t ./...
+  ci:
+    - make vet vendor-status test
+    - go build

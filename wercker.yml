@@ -1,0 +1,17 @@
+box: golang:1.8.1-stretch
+
+build:
+  steps:
+    - script:
+        name: install
+        code: |
+          cd $WERCKER_SOURCE_DIR
+          make change-import-path
+          bash scripts/gogetcookie.sh
+          go get github.com/kardianos/govendor
+          go get -v -d -t ./...
+    - script:
+        name: test
+        code: |
+          make vet vendor-status test
+          go build
