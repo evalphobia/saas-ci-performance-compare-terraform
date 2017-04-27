@@ -105,8 +105,10 @@ vendor-status:
 	@govendor status
 
 change-import-path:
-	find . -type f -print | xargs grep -l 'github.com/hashicorp/terraform' | xargs sed -e 's@github.com/hashicorp/terraform@github.com/evalphobia/saas-ci-performance-compare-terraform@g' -i ;
-	sed -i Makefile 's@/terraform/vendor/@/saas-ci-performance-compare-terraform/vendor/@g'
+	find . -type f -print | xargs grep -l 'github.com/hashicorp/terraform' | xargs sed -e 's@github.com/hashicorp/terraform@github.com/evalphobia/saas-ci-performance-compare-terraform@g' -i
+	sed -i ./Makefile -e 's@/terraform/vendor/@/saas-ci-performance-compare-terraform/vendor/@g'
+	sed -i ./scripts/generate-plugins.go -e 's@"terraform"@"saas-ci-performance-compare-terraform"@g'
+	make fmt
 
 # disallow any parallelism (-j) for Make. This is necessary since some
 # commands during the build process create temporary files that collide

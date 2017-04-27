@@ -13,5 +13,5 @@ dependencies:
     - go get github.com/kardianos/govendor
 test:
   override:
-    - make vet vendor-status test
+    - make test
     - go build
