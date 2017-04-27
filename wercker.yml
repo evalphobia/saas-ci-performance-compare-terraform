@@ -13,5 +13,5 @@ build:
     - script:
         name: test
         code: |
-          make vet vendor-status test
+          make test
           go build

@@ -17,5 +17,5 @@ build:
     - go get github.com/kardianos/govendor
     - go get -v -d -t ./...
   ci:
-    - make vet vendor-status test
+    - make test
     - go build
